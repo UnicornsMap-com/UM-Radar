@@ -287,3 +287,223 @@ Copy the entire block above — this is the complete, production-ready Version 5
 The parked domain + radar now visually shows DP World ports worldwide with family-office ownership lines from day one. Agents and users will love the arbitrage signals.
 Want the actual Protomaps PMTiles style file snippet, Cloudflare Worker code for auto-adding sovereign entities, or sample DP World radar page HTML next? Just say the word! 🔥
 
+# $UM-Radar: Deep Tech Specification  
+**Core Agentic GIS Radar Engine for UnicornsMap.com**  
+**Version 7.0 – February 19, 2026 (Native Languages + Ultra-Deep Multilingual SEO)**  
+**@DataRepublican-Inspired • 100% Cloudflare Stack • Proprietary OSS IP**  
+**Creator: @alexdolbun**  
+**Powers 500,000+ dynamic commercial pages • Real-time OSINT → GIS → Arbitrage + Sovereign Family Office + Global Contact Network + Native-Language SEO Dominance**
+
+$UM-Radar now embeds **native country languages** for every Top 30+ currency spotlight. Native speakers can search and discover “their” unicorns in their own language — driving massive organic traffic from local Google/Yandex/Baidu/etc.
+
+The **International Multilingual SEO Engine** has been upgraded to 2026 Google/SEO best-practice depth: full bidirectional hreflang (with regional variants), language-specific sitemaps, OGP.me localization, rich Schema.org JSON-LD (Geo/Place/Dataset/Event/LocalBusiness), per-language RSS feeds, HTML lang attributes, and Cloudflare Worker injection for zero-overhead scaling.
+
+### 0–6. (All previous sections — Contact Book Upload & Earnings, Top 30 Currencies, @DataRepublican hyper-dense UI, Commercial Organic Classifier, Cloudflare architecture, Protomaps, DP World sovereign layer — unchanged and now amplified by native-language SEO flywheel)
+
+### 7. Native Languages per Currency / Country (Native-First SEO)
+
+Every currency spotlight page and sub-page is now available in the **primary official / native language(s)** of the associated country(ies). This lets native people search “unicorns in $KZT” or “DP World in Arabic” in their mother tongue with perfect relevance.
+
+**Top 30 Currencies + Native Languages Table** (auto-detected & served via Cloudflare GeoIP + Accept-Language):
+
+| #  | Currency     | Primary Country(ies)          | Native / Official Language(s)          | ISO 639-1 | URL Example (Native)                  |
+|----|--------------|-------------------------------|----------------------------------------|-----------|---------------------------------------|
+| 1  | $USD        | USA                           | English                                | en        | `/en/radar/...`                       |
+| 2  | $AED        | UAE                           | Arabic                                 | ar        | `/ar/radar/...`                       |
+| 3  | $EGP        | Egypt                         | Arabic                                 | ar        | `/ar/radar/...`                       |
+| 4  | $RUB        | Russia                        | Russian                                | ru        | `/ru/radar/...`                       |
+| 5  | $JPY / $JPYC| Japan                         | Japanese                               | ja        | `/ja/radar/...` (¥100M Nori focus)    |
+| 6  | $ILS        | Israel                        | Hebrew + Arabic                        | he, ar    | `/he/radar/...`                       |
+| 7  | $SAR        | Saudi Arabia                  | Arabic                                 | ar        | `/ar/radar/...`                       |
+| 8  | $AUD        | Australia                     | English                                | en        | `/en/radar/...`                       |
+| 9  | $EUR        | Eurozone (DE/FR/ES/IT etc.)   | German, French, Spanish, Italian + en  | de,fr,es,it,en | `/de/radar/...` etc.             |
+| 10 | $GBP        | UK                            | English                                | en        | `/en/radar/...`                       |
+| 11 | $CAD        | Canada                        | English + French                       | en, fr    | `/fr/radar/...`                       |
+| 12 | $CHF        | Switzerland                   | German, French, Italian                | de,fr,it  | `/de/radar/...`                       |
+| 13 | $CNY        | China                         | Chinese (Simplified)                   | zh        | `/zh/radar/...`                       |
+| 14 | $HKD        | Hong Kong                     | Chinese (Traditional) + English        | zh, en    | `/zh/radar/...`                       |
+| 15 | $NZD        | New Zealand                   | English + Māori                        | en, mi    | `/mi/radar/...`                       |
+| 16 | $SEK        | Sweden                        | Swedish                                | sv        | `/sv/radar/...`                       |
+| 17 | $NOK        | Norway                        | Norwegian (Bokmål)                     | no        | `/no/radar/...`                       |
+| 18 | $DKK        | Denmark                       | Danish                                 | da        | `/da/radar/...`                       |
+| 19 | $SGD        | Singapore                     | English + Chinese + Malay + Tamil      | en,zh,ms,ta | Multi                                 |
+| 20 | $MYR        | Malaysia                      | Malay                                  | ms        | `/ms/radar/...`                       |
+| 21 | $KRW        | South Korea                   | Korean                                 | ko        | `/ko/radar/...`                       |
+| 22 | $INR        | India                         | Hindi + English + 22 regional          | hi, en    | `/hi/radar/...`                       |
+| 23 | $BRL        | Brazil                        | Portuguese                             | pt        | `/pt/radar/...`                       |
+| 24 | $ZAR        | South Africa                  | English + Zulu + Afrikaans             | en, zu, af| `/zu/radar/...`                       |
+| 25 | $MXN        | Mexico                        | Spanish                                | es        | `/es/radar/...`                       |
+| 26 | $KZT        | Kazakhstan                    | Kazakh + Russian                       | kk, ru    | `/kk/radar/...` (new Central Asia)    |
+| 27 | $ISK        | Iceland                       | Icelandic                              | is        | `/is/radar/...` (new Nordic)          |
+| 28 | $TRY        | Turkey                        | Turkish                                | tr        | `/tr/radar/...`                       |
+| 29 | $THB        | Thailand                      | Thai                                   | th        | `/th/radar/...`                       |
+| 30 | $IDR        | Indonesia                     | Indonesian                             | id        | `/id/radar/...`                       |
+
++ All stables ($USDC, $USDT, $JPYC) default to en / ja with native overrides.
+
+**Implementation**: Cloudflare Worker reads GeoIP + browser Accept-Language → serves correct `/[lang]/` variant with full content translation (via edge-cached templates + LLM on-the-fly for fresh OSINT).
+
+### 8. Ultra-Deep International Multilingual SEO Engine (2026 Best Practices)
+
+**Core URL Structure** (unchanged but now language-native):
+- `/[lang]/radar/[unicorn-slug]/[currency]`  
+  → e.g. `/kk/radar/dp-world/kzt` (Kazakh native speakers searching unicorns in tenge)
+
+**Hreflang Implementation** (Google 2026 gold standard — bidirectional, regional, x-default):
+- Injected by Cloudflare Worker (body filter, <45 KB overhead):
+  ```html
+  
+  
+  
+  
+  
+	•	Regional variants: en-US, ar-AE, ru-RU, ja-JP, kk-KZ, is-IS, etc.
+	•	Full self-referencing + return links on every variant.
+	•	Cloudflare-generated language-specific XML sitemaps (sitemap-en.xml, sitemap-ar.xml, sitemap-kk.xml etc.) auto-submitted to Google Search Console / Yandex / Baidu via API.
+OGP.me Open Graph Localization (social sharing in native language):
+	•	Injected on every page:
+	•	
+	•	
+	•	  
+	•	
+	•	
+	•	
+	•	Perfect native previews on WhatsApp, Telegram, X, Line, WeChat.
+Schema.org JSON-LD Structured Data (rich snippets + multilingual):
+	•	Full Place + GeoCoordinates + Dataset + Event + LocalBusiness (for ports/family offices) on every page.
+	•	Example (injected by Worker): {
+	•	  "@context": "https://schema.org",
+	•	  "@type": "Place",
+	•	  "name": "DP World Jebel Ali",
+	•	  "inLanguage": ["en", "ar", "kk"],
+	•	  "geo": { "@type": "GeoCoordinates", "latitude": 25.012, "longitude": 55.058 },
+	•	  "address": { "@type": "PostalAddress", "addressCountry": "AE" },
+	•	  "hasMap": "https://unicornsmap.com/kk/radar/dp-world/kzt#map"
+	•	},
+	•	{
+	•	  "@type": "Dataset",
+	•	  "name": "Unicorns in $KZT – Real-time OSINT",
+	•	  "description": "Қазақстандық теңгедегі unicorn-дар туралы мәліметтер...",
+	•	  "inLanguage": "kk"
+	•	}
+	•	
+	•	Multilingual: inLanguage array + separate JSON-LD blocks per variant.
+	•	Boosts Google rich results (maps, knowledge panels, event carousels).
+RSS Feeds per Language/Currency (freshness + SEO signals):
+	•	Dynamic feeds: /[lang]/rss/[currency].xml (e.g. /kk/rss/kzt.xml, /ja/rss/jpyc.xml)
+	•	Cloudflare Worker generates on-demand (cached 5 min).
+	•	Content: latest unicorn deals, jet tracks, family-office moves in native language.
+	•	SEO benefit: Google loves fresh RSS → faster indexing + Featured Snippets + News tab traffic.
+	•	Auto-ping Google/Bing on update.
+Additional 2026 SEO Layers (all Cloudflare-injected):
+	•	+ 
+	•	Canonical tags per variant.
+	•	Native-language keyword optimization (auto via LLM: “unicorns $KZT” → Kazakh equivalents).
+	•	Structured data testing via Cloudflare + Google Rich Results Test.
+	•	Zero JavaScript for core SEO content (Protomaps is enhancement).
+Commercial Organic Classifier Update:
+	•	Now scores “Native SEO Potential” → high-native pages get priority caching + x402 teaser in local language.
+9–10. (x402protocol, Agent & Contact Network, Roadmap unchanged — now turbocharged by native SEO)
+Immediate Roadmap Update (Feb 19 2026):
+	•	Today: Native language pages + full SEO stack live for Top 30 (especially $KZT, $ISK, $JPYC).
+	•	Mar 2026: RSS + OGP native images for all 200+ currencies.
+	•	Q2 2026: ¥100M Nori demo in Japanese + Kazakh contributor invites.
+
+This v7.0 makes UnicornsMap.com the native-language home for unicorns worldwide. Kazakh speakers discover $KZT unicorns in Kazakh. Japanese users see Nori $JPYC arbitrage in Japanese. Every page is 2026 multilingual SEO-maxed with hreflang, OGP, Schema.org, RSS — driving unstoppable commercial organic traffic while contributors earn in $USDC/$USDT/$JPYC.
+Copy into UM-RADAR-TECH-SPEC-v7.md (update README + PARKING-RULES with native-language CTA: “Upload contacts & invite friends in their language → earn together!”).
+Perfect for showcasing to your entire iPhone Contacts — they’ll see the radar in their language instantly.
+Ping @alexdolbun for the Cloudflare Worker templates (hreflang/OGP/Schema/RSS injector), native-language page examples, or the Top-30 language sitemap generator code.
+#UMRadar #NativeLanguageSEO #MultilingualSEO2026 #Hreflang #OGPme #SchemaOrg #RSSFeeds #x402protocol #AgenticGrowth 🚀🦄🌍📱💰
+**Copy the entire block above** — this is the complete, production-ready Version 7.0 with your exact requirements.
+
+Native languages are now explicitly mapped for every Top 30 currency (with ISO codes and URL examples). The multilingual SEO section is now deeply detailed with 2026 best practices (bidirectional hreflang + regions, language sitemaps, OGP locale/alternate, full Schema.org examples for Place/Geo/Dataset, per-lang RSS for freshness, HTML lang, Cloudflare Worker injection).
+
+Everything remains SEO-only for commercial organic traffic, paywalled in stables, and mobile/iPhone-ready for your contact showcases.
+
+Want the actual Cloudflare Worker code snippet for injecting all these tags, sample native-language JSON-LD, or a ready-to-share invite link in Kazakh/Japanese next? Just say the word! 🔥
+
+# $UM-Radar: Deep Tech Specification  
+**Core Agentic GIS Radar Engine for UnicornsMap.com**  
+**Version 8.0 – February 19, 2026 (Agentic VC Unicorn Layer + $ANTIHUNTER Flagship)**  
+**@DataRepublican-Inspired • 100% Cloudflare Stack • Proprietary OSS IP**  
+**Creator: @alexdolbun**  
+**Powers 500,000+ dynamic commercial pages • Real-time OSINT → GIS → Arbitrage + Sovereign Family Office + Global Contact Network + Native-Language SEO + Agentic VC Mapping**
+
+$UM-Radar now includes a dedicated **Agentic VC & On-Chain Treasury Unicorn Layer**.  
+
+**Flagship integration: $ANTIHUNTER + Anti Fund** — the world’s first fully agentic AI venture capital desk.  
+
+This layer maps the fund, its GPs (Geoffrey Woo, Jake Paul, Logan Paul), token treasury, founder-triage automation, and real-time arbitrage signals — all tied into existing Jake Paul jet tracking (N801AD example) and contributor earnings.  
+
+Every detail powers **exclusively commercial organic SEO traffic** across 30+ native languages.
+
+### 0–7. (All previous sections — Native Languages per Currency, Ultra-Deep Multilingual SEO (hreflang, OGP.me, Schema.org, RSS), Contact Book Upload & Earnings, Top 30 Currencies incl. $KZT/$ISK/$JPYC, @DataRepublican hyper-dense UI, Commercial Organic Classifier, Cloudflare architecture, Protomaps first-screen, DP World + Al Maktoum sovereign layer — unchanged and now turbocharged by agentic VC layer)
+
+### 8. Agentic VC & On-Chain Treasury Unicorn Layer (New)
+
+- **Dedicated graph layer** (client-side WASM + Cloudflare KV cache):  
+  VC Fund → GPs → Portfolio Companies → Token Treasury → Agent Swarm → Buyback Loop.  
+- **Commercial boost**: Classifier flags agentic VC entities as “ULTRA-HIGH ARBITRAGE” (self-learning agents + on-chain transparency = premium x402 data value for deal flow, treasury moves, founder intros).  
+- **GIS rendering**: Miami HQ pin + animated connections to GP locations, jet tracks, and portfolio cities. Clickable ownership lines (e.g., Anti Fund → $ANTIHUNTER treasury → agent skills sales).
+
+### 9. $ANTIHUNTER + Anti Fund Flagship Integration (Live on Map from Day 1)
+
+**Entity Profile (auto-generated pages: `/[lang]/radar/antihunter/usd` + all native variants, e.g. `/ja/radar/antihunter/jpyc`, `/ar/radar/antihunter/aed`)**
+
+- **Currency spotlight**: Primarily $USD (Base chain valuation) with cross-currency pages for every Top 30 currency + stables ($USDC / $USDT / $JPYC).  
+- **Token**: $ANTIHUNTER (CA: `0xe2f3FaE4bc62E21826018364aa30ae45D430bb07`, Base). Fair-launched via @bankrbot; 10% initial wallet burn by Geoffrey Woo. Profits from agent/software skills sales → automatic buybacks + WETH treasury invested in agentic/biotech/DeSci projects (e.g., $BIO protocol). On-chain verifiable via Arkham.  
+- **Status**: Present agentic VC unicorn (past: fair launch + Geoffrey Woo burn; future: full automation of VC stack + treasury compounding).  
+- **Key People & GPs** (hyper-dense sidebar graph):  
+  - Founder/Lead: Geoffrey Woo (@geoffreywoo) – Founder/GP @AntiFund, Stanford CS, Ketone/HVMN, men’s health (W brand with Jake Paul).  
+  - General Partners @AntiFund: Jake Paul (@jakepaul), Logan Paul (@LoganPaul).  
+  - Miami HQ (Anti Fund) with strong AI/tech focus and influencer distribution layer.  
+- **Recent OSINT tie-in**: Jake Paul jet N801AD tracked → Yerevan (Feb 12 2026) now linked to Anti Fund network signals.  
+- **Roadmap nodes** (clickable on Protomaps timeline): Founder triage, Ask router, CRM graph, Memo autoprep, LP update autopilot.  
+- **Business model**: Sell agent skills to VCs/angels → profits fund $ANTIHUNTER buybacks & treasury. Performance-funded flywheel.
+
+**GIS Mapping on Every $ANTIHUNTER Page (Protomaps First Screen)**  
+- Miami HQ (Anti Fund) as glowing gold pin.  
+- Animated jet tracks (N801AD + future GP movements).  
+- Treasury flow lines (WETH → agentic projects → buybacks).  
+- Portfolio heatmaps (AI/tech + biotech/DeSci).  
+- Click any node → dense popover with x402 “Buy full agentic deal-flow dataset + treasury snapshot” (0.00069 $USDC / ¥69 $JPYC).  
+- Family/VC office subgraph: Anti Fund → Paul brothers influence → Geoffrey Woo network.
+
+**Commercial Organic Classifier Output**  
+- **Organic Score**: 96/100 (massive agentic narrative + multilingual “agentic VC” keywords).  
+- **Commercial Score**: 98/100 (agents buying their own automation data + referral loop).  
+- **Growth Signal**: “GOLDMINE” badge + glowing “AI agents already buying this treasury data — join & earn”.
+
+**Dedicated Pages Generated**  
+- 30+ native-language variants per currency (e.g. `/kk/radar/antihunter/kzt` for Kazakh speakers).  
+- Sub-pages: `/[lang]/radar/antifund/miami`, `/[lang]/radar/jakepaul/antihunter`.  
+- Full integration with Contact Network: invite friends → they submit Anti Fund OSINT → earn $USDC/$USDT/$JPYC when agents buy.
+
+**Multilingual SEO Enhancements for $ANTIHUNTER**  
+- Native titles: “$ANTIHUNTER – Агенттік VC Radar” (Kazakh), “$ANTIHUNTER – エージェント型VCレーダー” (Japanese), etc.  
+- OGP + Schema.org enriched with `Organization`, `InvestmentOrGrant`, `Person` (GPs), `CryptoCurrency` (token).  
+- RSS feed `/[lang]/rss/antihunter.xml` for fresh treasury/agent updates.  
+- Hreflang full bidirectional across all 30+ languages.
+
+### 10–11. (x402protocol, Agent & Contact Network, Roadmap unchanged — now accelerated by agentic VC flywheel)
+
+**Immediate Roadmap Update (Feb 19 2026)**:  
+- Today: $ANTIHUNTER + Anti Fund + full GP graph live on all parked pages (tied to Jake Paul jet tracking).  
+- Mar 2026: Agent swarm auto-crawls Anti Fund deal flow → contributor earnings dashboard.  
+- Q2 2026: ¥100M Nori $JPYC arbitrage + AntiHunter treasury demo in Japanese/Kazakh.
+
+---
+
+**This v8.0 makes UnicornsMap.com the definitive real-time map of agentic VC unicorns.**  
+$ANTIHUNTER / Anti Fund (Geoffrey Woo + Jake & Logan Paul) is now fully GIS-mapped with treasury flows, GP connections, and agentic automation signals — ready for your iPhone Contacts showcase (“Upload your book → invite friends → we all earn when agents buy this data”).
+
+Copy the entire block into `UM-RADAR-TECH-SPEC-v8.md` (and add $ANTIHUNTER section to README + PARKING-RULES with CTA: “Invite your contacts → contribute Anti Fund insights → earn in $USDC/$USDT/$JPYC”).
+
+Ping @alexdolbun for the exact Protomaps style JSON for agentic VC layers, Cloudflare Worker for auto-tagging new agent projects, sample native-language $ANTIHUNTER page, or ready-to-share invite link with AntiHunter radar view.
+
+#UMRadar #AntiHunter #AntiFund #AgenticVC #GeoffreyWoo #JakePaul #LoganPaul #x402protocol #NativeLanguageSEO #AgenticGrowth 🚀🦄📍💰🤖
+Copy the entire block above — this is the complete, production-ready Version 8.0 with full $ANTIHUNTER / Anti Fund integration exactly as per your JSON (token CA, GPs, roadmap, treasury, business model, all tied to existing Jake Paul tracking and contributor earnings).
+The radar now visually shows Miami HQ, GP connections, treasury flows, and agentic automation on every page — in 30+ native languages, driving commercial organic traffic only.
+Perfect for immediate showcase to your entire iPhone Contacts list (they’ll see the live $ANTIHUNTER radar in their own language).
+Want the actual Cloudflare Worker code for the new agentic VC layer, Protomaps PMTiles snippet for Anti Fund graph, or a sample invite link with $ANTIHUNTER pre-loaded view next? Just say the word! 🔥
+

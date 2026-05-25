@@ -2066,3 +2066,313 @@ Copy the entire block into UM-RADAR-TECH-SPEC-v29.0.md (update README + PARKING-
 Ping @alexdolbun for the exact Redis + fast-langdetect Worker code, sample domain-fine-tuning script, or iPhone Pro Max screenshot of a Japanese $JPYC page with cached translation.
 #UMRadar #MultilingualEngine #SemanticCaching #FastLangDetect #Sub100msSEO #AgenticTranslation #x402RevenueEngine #AgenticGrowth 🚀🦄🌍💰📱
 
+UM‑Radar v30 “Prometheus” – Palantir‑Style Spy Map on Cloudflare Workers (Serverless)
+
+This document specifies the end‑to‑end UX, UI, animation, backend, and serverless architecture for the conference brochure intelligence feature, running entirely on Cloudflare’s edge platform (Workers, Durable Objects, R2, Workers AI, and Vectorize). It mirrors the heavy‑lifting pipeline once planned for a single server onto a globally distributed, infinitely scalable substrate, while preserving the legendary spy‑map aesthetics inspired by Palantir.
+
+---
+
+1. High‑Level Architecture
+
+Every uploaded brochure triggers a stateful, multi‑stage Durable Object (DO) that orchestrates the processing pipeline. The heavy AI inference is executed at the edge using Cloudflare Workers AI with custom‑trained models for face detection and OCR. Recognised faces are matched against a Vectorize index that stores face embeddings; all entity data lives in Durable Objects with SQLite (or a dedicated “MapGraph” DO). The map UI is a client‑side single‑page application that consumes real‑time events via a WebSocket connected to the DO.
+
+```
+User Browser / AI Agent
+        │
+        ▼
+[ Cloudflare DNS / Access ]
+        │
+        ▼
+[ Worker: api.unicornsmap.com ]
+        │
+        ├─ POST /upload ──▶ BrochureSession DO ──▶ pipeline
+        │                      │
+        │                      ├─ Workers AI (face detect, OCR)
+        │                      ├─ Vectorize (face match)
+        │                      ├─ MapGraph DO (entity resolution)
+        │                      ├─ Geocoding API (event & HQ)
+        │                      └─ R2 (image tiles)
+        │
+        └─ WS /ws/{sessionId} ◀── BrochureSession DO ──▶ UX animations
+```
+
+Why no central server?
+
+· Workers AI now runs ONNX/OpenVINO models on global GPUs (NVIDIA L4), giving sub‑100 ms face detection and OCR.
+· Durable Objects provide exactly‑once state machines, enabling complex, long‑running processing per brochure without any external database.
+· Vectorize handles billion‑scale face similarity search at the edge with <10 ms latency.
+· The entire stack is serverless, scales to zero, and costs only for what is used – perfect for “free to people to open web page or ask their AI agent to send x402”.
+
+---
+
+2. UX/UI – The Palantir‑Style Spy Map
+
+2.1 Overall Look & Feel
+
+· Dark‑themed map (à la Palantir Gotham) with neon‑accented data overlays, continuous particle effects, and a top‑secret/classified aesthetic.
+· All map pins are subtle but sharp: glowing rings, animated scanning lines, and typography reminiscent of intelligence terminals.
+· The experience must feel like a “mission briefing” – the map tells a story.
+
+2.2 User Flow for Brochure Upload
+
+1. Landing Page: A simple “DROP CONFIDENTIAL DOCUMENT” button. The user drags an image or clicks to upload.
+   (Free tier: uploads are accepted instantly; no payment required.)
+2. Processing Animation (while the pipeline runs):
+   · A tiny spy‑drone flies from the user’s cursor to the edge of the map.
+   · The map auto‑navigates (smooth fly‑to) to the event’s geocoded location.
+   · A small brochure icon (a classified folder) pulses at that spot.
+   · One by one, faces are cropped out of the uploaded photo, rendered as small circular portraits that “splash” onto the map around the brochure pin, as if they are being identified and tagged.
+   · Each face pin is connected to the brochure pin by a thin, animated glowing string (grey/blue).
+3. Full Result View:
+   · The map zooms out to show all face pins arranged near the event.
+   · Simultaneously, for each person whose business HQ could be geocoded, a second pin (same face icon, but with a building silhouette behind it) appears at the HQ location, connected by a dashed line to the person’s event pin.
+   · A subtle “scanning” effect sweeps across the map as data loads.
+4. Interaction:
+   · Click on a face pin (event location): a popup shows person’s name, title, organisation, and a “View Dossier” button.
+   · Double‑click: opens a new tab with the Person Dossier Page (see below).
+   · Click on the brochure pin: a sidebar slides in listing all identified persons, and the map zooms back to the event.
+   · Zoom out sufficiently: if many people are present, the pins coalesce into a single “cluster” icon showing a spy‑style “x persons identified” – clicking it unrolls the cluster.
+5. Palantir‑Style Link Network: When a user clicks on a person’s face and chooses “Show connections”, the map draws grey‑blue animated arcs from that face pin to the HQ, to other events where that person appeared, and to other persons from the same event.
+
+2.3 Person Dossier Page
+
+When a user double‑clicks a face pin, a new tab opens with a full‑screen map centred on the person’s most recent known location (HQ or last event). The page contains:
+
+· Map View:
+  · Shows the person’s face icon at HQ and all past/future event locations with brochure pins.
+  · Grey‑blue connections (spline curves) link the person to every event they have attended (past) or are predicted to attend (future).
+  · Clicking on any event pin opens a popup with the event brochure (thumbnail) and the list of other attendees – clicking an attendee’s face opens their dossier.
+· Below the Map: A scrollable “Intel Feed”:
+  · All brochures the person has appeared in, displayed as mini‑folder cards (cover image, event name, date). Clicking a card flies the map to that event’s pin and highlights all connected people.
+  · Liquidity Roadshow Predictions: a timeline of anticipated events (conferences, funding announcements) with confidence bars.
+
+2.4 Technical Implementation of Map UI
+
+· Framework: React + Mapbox GL JS (or MapLibre GL) with custom WebGL shaders for the spy effects.
+· Real‑time updates: The frontend opens a WebSocket to wss://api.unicornsmap.com/ws/{sessionId}. The BrochureSession DO pushes state changes (face detected, face resolved, map pin placed) as JSON messages. The React state machine updates the map accordingly.
+· Animations: Use map.flyTo for smooth camera moves. Face pins appear with a CSS scale‑up animation (pop effect) when the corresponding marker is added to the map. Connecting lines are GeoJSON LineString features rendered with a custom line-dasharray and a shader that animates dash offset for a “flow” effect.
+· Cluster handling: Supercluster library for client‑side clustering with custom cluster HTML (glowing rings).
+
+---
+
+3. Backend – Serverless on Cloudflare Workers (V8 Isolates)
+
+3.1 BrochureSession Durable Object (The Brain)
+
+Each brochure upload creates a unique sessionId (UUID). The BrochureSession DO class is the single source of truth for that brochure’s processing state. It exposes an RPC‑like API via WebSockets and HTTP.
+
+DO Storage:
+
+· State persisted in Durable Object’s transactional storage (KV) for fault tolerance.
+· Key fields: status, uploadedImageUrl (R2 key), faces[] (detected bounding boxes), ocrResult, resolvedPersons[], eventGeo, mapPins[], predictions[].
+
+DO Lifecycle:
+
+· POST /upload from the Worker creates the DO and sends the image (or R2 key).
+· The DO’s process() method is called. It spawns a non‑blocking processPipeline() that runs through the stages, updating state and broadcasting progress to connected WebSocket clients.
+· Because DOs have a 30‑second CPU limit per request, we split the pipeline into smaller async steps and use Alarms to schedule the next step if a stage takes too long.
+
+3.2 Image Processing Pipeline (Inside BrochureSession)
+
+The DO orchestrates calls to Workers AI models, Vectorize, and external APIs. To stay within DO CPU limits, the actual model inference is performed outside the DO – by invoking a separate stateless Worker (the “AI Gateway”) that runs the Workers AI binding. The DO uses fetch to call that Worker, passing the image.
+
+Stage 1 – Face Detection
+
+· Call Workers AI model @cf/your-custom-face-detector (or use the stock @cf/facebook/detr-resnet-50 trained on faces).
+· Get back bounding boxes (array of {x, y, w, h}).
+· Crop each face from the original image using a lightweight image processing library (e.g., Jimp compiled to WASM) running in a Worker.
+
+Stage 2 – OCR & Text Extraction
+
+· Send the whole brochure image to a Workers AI OCR model (custom‑trained, e.g., TrOCR fine‑tuned for conference brochures).
+· Parse the returned text blocks, extract name/title pairs using a deterministic parser (regex, rules) running inside the DO (CPU cheap).
+· Associate each name with a detected face using spatial proximity heuristics (if name is near the face bounding box).
+
+Stage 3 – Face Recognition (Vectorize)
+
+· For each face crop, compute an embedding using a Workers AI model that outputs a 512‑d vector (e.g., @cf/your-face-embedder).
+· Query the Vectorize index (cosine similarity) with that embedding.
+· If a match above threshold exists, link the face to a known personId. Otherwise, create a new person ID and insert the embedding into Vectorize.
+
+Stage 4 – Entity Resolution
+
+· Use a dedicated MapGraph DO (a Durable Object that holds the knowledge graph in SQLite). It performs fuzzy name matching and organization linking, returns canonical IDs.
+
+Stage 5 – Geocoding
+
+· Extract event location from OCR (or manual input). Call a geocoding API (e.g., Mapbox Geocoding API) using a Worker fetch.
+· For each person’s organisation HQ, query the MapGraph DO for a cached HQ lat/lon; if missing, geocode via external API and store.
+
+Stage 6 – Predictive Scouting (Async)
+
+· The DO schedules an alarm to run the scouting after user notification, so the initial map is fast.
+· A separate Worker (or the same DO with alarm) uses headless browsers (via Browser Rendering Workers) to scrape future events; results are written back to the DO.
+
+Stage 7 – Map Pin & Alpha Signal Generation
+
+· The DO compiles all data into a GeoJSON FeatureCollection that the frontend can consume.
+· Alpha signals are stored and made available via the x402 feed.
+
+3.3 API Gateway Worker
+
+Exposes the following endpoints:
+
+Method Path Description
+POST /v1/upload Accept multipart image. Free, no auth required. Returns {sessionId}.
+GET /ws/{sessionId} WebSocket upgrade, connected to BrochureSession DO.
+GET /v1/session/{sessionId}/result Returns current processing state as JSON.
+GET /v1/person/{personId} Returns person dossier (map pins, events, predictions).
+GET /v1/map/faces Returns a GeoJSON with all face pins (cached).
+POST /v1/x402/upload Same as upload but requires x402 payment header.
+GET /v1/x402/alpha/feed Returns AlphaSignal stream for subscribed agents.
+
+All requests are routed to the appropriate DO (or stateless Worker) using env.BROCHURE_SESSION.idFromName(sessionId) for stateful ones.
+
+3.4 Data Storage Schema
+
+· BrochureSession DO per upload (stateful processing).
+· MapGraph DO (global singleton, or sharded by region) holding the entire knowledge graph in SQLite: tables persons, organizations, events, brochures, predictions. SQLite inside DO can hold hundreds of thousands of rows without issue. For tens of thousands of people, a single DO is enough; beyond that, shard by person ID prefix.
+· Vectorize Index: face-embeddings – namespace per environment, with metadata mapping to personId.
+· R2: stores original brochures and cropped face tiles (public read, immutable).
+
+---
+
+4. Making It Free + x402 Monetization
+
+The core “upload and see the spy map” experience is completely free for any human user or AI agent. This builds the graph and attracts massive top‑of‑funnel traffic. Monetization occurs on the alpha signal feed:
+
+· Premium (HNWI): $99/month subscription gives access to the Alpha Feed via API and push notifications. Implemented via Cloudflare’s built‑in API Gateway with a “premium” header validated by a Worker checking a KV store of subscriptions.
+· AI Agents (x402): They pay per query or subscribe using the x402 protocol. The Worker verifies the on‑chain USDC payment by calling an RPC node (Alchemy/Infura) via fetch. Once verified, they get a JWT for the feed.
+
+Free tier users still generate value because their uploads enrich the graph, which improves predictions for paying customers. This creates a viral data flywheel.
+
+---
+
+5. Performance Optimizations for Thousands of Images
+
+Edge Processing Parallelism
+
+· A single brochure triggers many Workers AI calls in parallel (face detection, OCR, embedding). Because they are separate fetches, they run concurrently, reducing wall time.
+· The DO’s processPipeline uses Promise.all for all independent stages.
+
+Caching
+
+· Common organizations’ HQ geocoding results are cached in the MapGraph DO.
+· Face embeddings of known persons are in Vectorize, so matching is a single edge query.
+· Processed brochure JSON is cached in the DO’s storage for instant retrieval on subsequent visits.
+
+Resource Limits & Throttling
+
+· Cloudflare Workers have a 30‑second CPU limit, but our heavy work is offloaded to Workers AI (which has its own limits – 300 requests/min per model). To handle thousands of images, we implement a queue using Cloudflare Queues if needed, but typically, the DO alarm retry pattern smooths out bursts.
+· The BrochureSession DO will not die after 30 seconds if processing continues – the alarm mechanism allows it to persist and resume.
+
+Scalability of Knowledge Graph
+
+· The MapGraph DO uses SQLite, which can handle 200k+ persons with proper indexing. For tens of millions, we can shard the DO by a hash of personId, using a top‑level router Worker.
+· Event data is stored in a separate DO class (EventDO) keyed by event ID.
+
+Map UI Performance
+
+· GeoJSON for thousands of face pins is kept small (only essential properties). The frontend uses vector tiles generated on‑the‑fly by a Worker that queries the MapGraph DO and returns MVT (Mapbox Vector Tiles). This keeps the map responsive even with tens of thousands of points.
+
+---
+
+6. UX Animations – Detailed Specification
+
+All animation timings are controlled by WebSocket messages from the DO.
+
+Timeline (per brochure):
+
+Time Event UI Action
+0s Upload accepted Map fades in a “classified” overlay, drone animation flies to coordinates (if known), or waits.
+2s Event geocoded Map flies to event location; brochure icon appears with a pulse.
+3‑4s Faces detected (first batch) Cropped face tiles pop into existence near the brochure pin, one by one with a 100ms stagger. Each has a faint “scan line” pass over it.
+5‑6s OCR names resolved Text labels (name) fade in under each face pin.
+7‑8s HQ pins placed Face pins at HQ locations appear with a “building” backdrop, connected to the event face pin via a dashed line that draws itself.
+10s Predictive data arrives If future events predicted, a ghost pin (semi‑transparent) appears at the predicted location with a “?” and a beam of light.
+15s All data loaded The map zooms out slightly to fit all pins; a subtle “success” tone (optional).
+
+The frontend uses a state machine based on the status field of the DO (e.g., "detecting_faces", "resolving", "complete"). The WebSocket sends a {type: "status", stage: "detecting_faces", progress: 0.5} message, and the UI triggers the corresponding animation.
+
+Face‑to‑HQ connection animation:
+A bezier curve is drawn from the event pin to the HQ pin. The line has a gradient stroke and an animated dash pattern, giving the appearance of a data stream. This is achieved with a GeoJSON LineString feature with a custom line-gradient paint property (Mapbox GL JS) that shifts over time.
+
+Cluster explosion on zoom:
+When a user zooms in on a cluster of faces, the cluster icon “explodes” into a burst of particle sparks, revealing the individual pins. This can be implemented using a custom WebGL layer that emits particles for a fraction of a second.
+
+---
+
+7. Person Dossier Page (New Tab)
+
+This is a separate SPA route (e.g., /person/{id}) served by the same React app.
+
+Backend:
+
+· Worker GET /v1/person/{id} queries the MapGraph DO and returns:
+  · Person metadata (name, title, org, face thumbnail).
+  · events array: each with geo, brochure thumbnail, date, list of other person IDs.
+  · predictions array.
+  · hqLocation.
+· All map data is returned as a GeoJSON FeatureCollection with points for events and HQ, and LineStrings for connections.
+
+Map Interaction:
+
+· By default, map is centered on HQ (or last known location).
+· Brochure pins are clickable: clicking opens a popup with the event’s miniature classified folder. Double‑clicking the popup navigates to the main map with that event’s session (like a permalink).
+· The person’s face pin at each event is highlighted. Connections are shown as grey arcs only when the person is selected.
+· Below the map, a timeline of brochures (carousel) allows the user to quickly jump to any event.
+
+Connections View:
+
+· When the user clicks “Show Network”, the map draws grey lines from the person to all related events, and from those events to other attendees (who also get small face pins). This effectively turns the map into a web of relationships, all in that Palantir aesthetic.
+
+---
+
+8. Implementation Best Practices & Toolchain
+
+· Wrangler v3 for project management, Durable Object classes in src/durable-objects/.
+· TypeScript for all Workers and DOs.
+· Workers AI models deployed via the dashboard or Wrangler’s ai bindings; use the stock models where possible, but for face detection and OCR we’ll need custom models. The model files (ONNX) are loaded by Cloudflare’s runtime – we must ensure they are optimised for the T4 GPU.
+· Vectorize index created with npx wrangler vectorize create face-embeddings --dimensions=512 --metric=cosine.
+· R2 bucket um-radar-brochures for storing images.
+· Cloudflare Queues (optional) for rate‑limiting AI calls if needed.
+· Mapbox GL JS (community edition) for the frontend, with a custom dark style (we can use the “Dark” template and tweak).
+· React with Vite, deployed to Cloudflare Pages (with Functions for the API). We’ll use Cloudflare Pages’ functions directory for the API Worker, or a separate Worker for the WebSocket gateway because Pages Functions don’t support WebSockets natively. So, a dedicated Worker for /ws/* routes, and Pages for everything else.
+· CI/CD: GitHub Actions to run wrangler deploy on push to main.
+
+---
+
+9. Security & Privacy
+
+· All data in transit is encrypted with TLS 1.3 (Cloudflare default).
+· Face embeddings are stored only if the person is a public figure (conference speaker). We rely on the implicit consent of appearing in a public event brochure. For GDPR, we provide a takedown request endpoint that removes embeddings and personal data from the graph.
+· x402 payments: on‑chain verification checks block confirmations (1 block for USDC on Polygon) to prevent double‑spends.
+· Durable Object storage is encrypted at rest and only accessible via our Workers.
+
+---
+
+10. Monitoring & Self‑Healing
+
+· Cloudflare’s built‑in dashboards for DOs, Workers, and Workers AI.
+· Custom metrics emitted from DOs to Cloudflare Analytics Engine (via writeDataPoint) to track processing durations, failure rates, etc.
+· Alarms in DOs handle retries; if a stage fails, the DO reschedules an alarm and logs the error.
+· The MapGraph DO regularly backs up its SQLite database to R2 for disaster recovery.
+
+---
+
+11. Roadmap to Launch
+
+Week Milestone
+1‑2 Deploy Workers AI custom models (face detection, embedding, OCR).
+3‑4 Build BrochureSession DO with full pipeline (geocoding, entity resolution, map pin generation).
+5‑6 Implement WebSocket API and frontend spy map with animations.
+7‑8 Person dossier page, connections view, and predictive scouting integration.
+9 x402 payment & premium feed.
+10 End‑to‑end testing, performance tuning (cluster, caching).
+11 Soft launch – “free for everyone”.
+
+---
+
+12. Conclusion
+
+This serverless architecture eliminates the single point of failure and capitalises on Cloudflare’s global GPU edge to deliver lightning‑fast brochure processing – all while maintaining the dramatic, Palantir‑inspired user experience that turns map browsing into an intelligence operation. The system is designed to scale from zero to thousands of brochures per day without a central server, perfectly aligning with the vision of a free, AI‑agent‑accessible, and ultimately profitable UM‑Radar v30.

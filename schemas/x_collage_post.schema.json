@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unicornsmap.com/schemas/x_collage_post.schema.json",
+  "title": "XCollagePost",
+  "type": "object",
+  "required": ["id", "url", "author", "media"],
+  "properties": {
+    "id": { "type": "string" },
+    "url": { "type": "string", "format": "uri" },
+    "author": { "type": "string" },
+    "created_at": { "type": "string" },
+    "text": { "type": "string" },
+    "media": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" },
+      "minItems": 1
+    },
+    "status": { "enum": ["queued", "clipping", "upserting", "live", "failed"] },
+    "persons_extracted": { "type": "array", "items": { "type": "string" } }
+  }
+}

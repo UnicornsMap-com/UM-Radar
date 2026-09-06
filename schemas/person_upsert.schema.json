@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unicornsmap.com/schemas/person_upsert.schema.json",
+  "title": "PersonUpsert",
+  "type": "object",
+  "required": ["slug", "name", "source_post_id", "media_url", "lat", "lon"],
+  "properties": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "name": { "type": "string" },
+    "handle": { "type": "string" },
+    "source_post_id": { "type": "string" },
+    "media_url": { "type": "string", "format": "uri" },
+    "face_clip_url": { "type": "string", "format": "uri" },
+    "lat": { "type": "number" },
+    "lon": { "type": "number" },
+    "confidence": { "enum": ["HIGH", "MED", "LOW"] },
+    "langs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Platform langs e.g. en zh ja …"
+    },
+    "edges": { "type": "array", "items": { "type": "string" } }
+  }
+}

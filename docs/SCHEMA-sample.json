@@ -1,0 +1,131 @@
+{
+  "_comment": "SCHEMA sample — one event record from EVENT_GIS_UNIFIED_DATA.json (public OSINT only). Fields: event_id (slug), speakers[] with per-person slug/page/photo/coords, confidence 0-100, source citations.",
+  "event_id": "smf-connect-2026",
+  "event_name": "SMF Connect — Global Voices Shaping the Future of Media (Saudi Media Forum, Riyadh)",
+  "event_date": "2026-08",
+  "event_end": "",
+  "city": "Riyadh, Saudi Arabia",
+  "lat": 24.7136,
+  "lng": 46.6753,
+  "venue": "Riyadh, Saudi Arabia (exact venue unpublished — HANDLE_UNKNOWN per canon)",
+  "organizers": [
+    "Saudi Media Forum"
+  ],
+  "co_organizers": [],
+  "sponsors": [],
+  "site": "https://saudimf.sa",
+  "iso2": "SA",
+  "tz": "Asia/Riyadh",
+  "currencies": [
+    "SAR",
+    "USD",
+    "USDC"
+  ],
+  "attendees": "",
+  "speakers_count": 9,
+  "source_post": "https://x.com/alexdolbun/status/2093707705584128190",
+  "x402_price_usd": 4.99,
+  "speakers": [
+    {
+      "slug": "tony-gallagher",
+      "name": "Tony Gallagher",
+      "title": "Editor-in-Chief, The Times",
+      "lat": 51.5074,
+      "lng": -0.1278,
+      "city": "London, UK (org location)",
+      "confidence": 90,
+      "photo": "https://alexdolbun.zo.space/images/events/smf-connect-2026/speakers/smf-01-tony-gallagher.jpg",
+      "source": "slaati.com + jarayid.com + saudimf.sa + official SMF Connect poster roster; venue-fallback coords where no public org location (HANDLE_UNKNOWN per canon)"
+    },
+    {
+      "slug": "karen-elliott-house",
+      "name": "Karen Elliott House",
+      "title": "Senior Fellow, Belfer Center Harvard; Former Publisher, The Wall Street Journal",
+      "lat": 42.3736,
+      "lng": -71.119,
+      "city": "Cambridge, MA, USA (org location)",
+      "confidence": 90,
+      "photo": "https://alexdolbun.zo.space/images/events/smf-connect-2026/speakers/smf-02-karen-elliott-house.jpg",
+      "source": "slaati.com + jarayid.com + saudimf.sa + official SMF Connect poster roster; venue-fallback coords where no public org location (HANDLE_UNKNOWN per canon)"
+    },
+    {
+      "slug": "guillermo-serrano",
+      "name": "Guillermo Serrano",
+      "title": "Researcher in Digital Transformation and Human-Machine Interaction",
+      "lat": 24.7136,
+      "lng": 46.6753,
+      "city": "Riyadh (event fallback — no public location)",
+      "confidence": 85,
+      "photo": "https://alexdolbun.zo.space/images/events/smf-connect-2026/speakers/smf-03-guillermo-serrano.jpg",
+      "source": "slaati.com + jarayid.com + saudimf.sa + official SMF Connect poster roster; venue-fallback coords where no public org location (HANDLE_UNKNOWN per canon)"
+    },
+    {
+      "slug": "con-coughlin",
+      "name": "Con Coughlin",
+      "title": "Defence and Foreign Affairs Editor, The Daily Telegraph",
+      "lat": 51.5074,
+      "lng": -0.1278,
+      "city": "London, UK (org location)",
+      "confidence": 90,
+      "photo": "https://alexdolbun.zo.space/images/events/smf-connect-2026/speakers/smf-04-con-coughlin.jpg",
+      "source": "slaati.com + jarayid.com + saudimf.sa + official SMF Connect poster roster; venue-fallback coords where no public org location (HANDLE_UNKNOWN per canon)"
+    },
+    {
+      "slug": "douglas-scott",
+      "name": "Douglas Scott",
+      "title": "Founder; Creative Director, UNXNOWN / KYNETIC Media Ventures",
+      "lat": 24.7136,
+      "lng": 46.6753,
+      "city": "Riyadh (event fallback — no public location)",
+      "confidence": 85,
+      "photo": "https://alexdolbun.zo.space/images/events/smf-connect-2026/speakers/smf-05-douglas-scott.jpg",
+      "source": "slaati.com + jarayid.com + saudimf.sa + official SMF Connect poster roster; venue-fallback coords where no public org location (HANDLE_UNKNOWN per canon)"
+    },
+    {
+      "slug": "gayle-dickie",
+      "name": "Gayle Dickie",
+      "title": "President, News and Television — Gamer World and Crazytown International",
+      "lat": 24.7136,
+      "lng": 46.6753,
+      "city": "Riyadh (event fallback — no public location)",
+      "confidence": 85,
+      "photo": "https://alexdolbun.zo.space/images/events/smf-connect-2026/speakers/smf-06-gayle-dickie.jpg",
+      "source": "slaati.com + jarayid.com + saudimf.sa + official SMF Connect poster roster; venue-fallback coords where no public org location (HANDLE_UNKNOWN per canon)"
+    },
+    {
+      "slug": "andrew-hosken",
+      "name": "Andrew Hosken",
+      "title": "International Communications and Public Relations Consultant; Former Senior BBC News Investigations Editor",
+      "lat": 24.7136,
+      "lng": 46.6753,
+      "city": "Riyadh (event fallback — no public location)",
+      "confidence": 85,
+      "photo": "https://alexdolbun.zo.space/images/events/smf-connect-2026/speakers/smf-07-andrew-hosken.jpg",
+      "source": "slaati.com + jarayid.com + saudimf.sa + official SMF Connect poster roster; venue-fallback coords where no public org location (HANDLE_UNKNOWN per canon)"
+    },
+    {
+      "slug": "simon-thethi",
+      "name": "Simon Thethi",
+      "title": "Founder, Indicium Media; Founder and CEO, Ventures Co-Production",
+      "lat": 24.7136,
+      "lng": 46.6753,
+      "city": "Riyadh (event fallback — no public location)",
+      "confidence": 85,
+      "photo": "https://alexdolbun.zo.space/images/events/smf-connect-2026/speakers/smf-08-simon-thethi.jpg",
+      "source": "slaati.com + jarayid.com + saudimf.sa + official SMF Connect poster roster; venue-fallback coords where no public org location (HANDLE_UNKNOWN per canon)"
+    },
+    {
+      "slug": "dick-roberts",
+      "name": "Dick Roberts",
+      "title": "Executive Vice President of Global Marketing Strategy, Harlem Globetrotters",
+      "lat": 24.7136,
+      "lng": 46.6753,
+      "city": "Riyadh (event fallback — no public location)",
+      "confidence": 85,
+      "photo": "https://alexdolbun.zo.space/images/events/smf-connect-2026/speakers/smf-09-dick-roberts.jpg",
+      "source": "slaati.com + jarayid.com + saudimf.sa + official SMF Connect poster roster; venue-fallback coords where no public org location (HANDLE_UNKNOWN per canon)"
+    }
+  ],
+  "generated": "2026-09-06T18:49:23.336058Z",
+  "notes": "Outcomes to be showcased at Saudi Media Forum 2027 (Riyadh, Feb 1-3 2027). Month-precision date per OSINT canon (exact day unpublished). 9 officially-postered faces only; no invented attendees."
+}

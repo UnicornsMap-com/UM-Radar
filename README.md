@@ -2376,3 +2376,17 @@ Week Milestone
 12. Conclusion
 
 This serverless architecture eliminates the single point of failure and capitalises on Cloudflare’s global GPU edge to deliver lightning‑fast brochure processing – all while maintaining the dramatic, Palantir‑inspired user experience that turns map browsing into an intelligence operation. The system is designed to scale from zero to thousands of brochures per day without a central server, perfectly aligning with the vision of a free, AI‑agent‑accessible, and ultimately profitable UM‑Radar v30.
+---
+
+## Appendix — Agent-Facing Docs (2026-09)
+
+- [`docs/EVENT-INGEST-STANDARD.md`](docs/EVENT-INGEST-STANDARD.md) — the production X → clip → map
+  pipeline standard: PHOTO-QAA gate, OSINT canon, additive CORE_EVENTS node contract, page rails,
+  feed-consistency checklist, CDN layout. Written for community contributors and autonomous AI agents.
+- [`docs/SCHEMA-sample.json`](docs/SCHEMA-sample.json) — a real record from
+  `EVENT_GIS_UNIFIED_DATA.json` (SMF Connect 2026, Riyadh) showing the canonical event-graph schema:
+  event_id, venue + real GIS coordinates, 9 roster speakers with per-person slugs/photos/confidence,
+  currencies, and source citations.
+
+Contribution rule of thumb: **additive only** — new event nodes, new pages, new feed rows;
+never rewrite or remove existing infrastructure.

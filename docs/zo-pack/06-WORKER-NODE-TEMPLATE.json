@@ -1,0 +1,31 @@
+{
+  "_comment": "Additive CORE node. Copy keys only. Never patch existing slugs in place without merge review.",
+  "slug": "example-event-2026",
+  "title": "Example Event 2026",
+  "sub": "One-line verified meta",
+  "desc": "OSINT profile — verified facts only. No attendance asserted.",
+  "img": "https://alexdolbun.zo.space/images/events/example-event-2026/banner.jpg",
+  "banner": "https://alexdolbun.zo.space/images/events/example-event-2026/banner.jpg",
+  "city": "Dubai",
+  "country": "UAE",
+  "date": "2026-09",
+  "venue": "Dubai (exact venue unpublished)",
+  "lat": 25.2048,
+  "lng": 55.2708,
+  "currencies": ["AED", "USDC", "USD"],
+  "languages": ["en","zh","ar","ru","fr","de","ja","es","kk","hi","id","tr","vi","th","it","nl","pl","he","pt","ko"],
+  "x402Price": 4.99,
+  "site": "",
+  "sources": [{"url": "", "label": "official"}],
+  "photos": [],
+  "speakers": [],
+  "tr": {
+    "ja": {"title": "", "desc": ""},
+    "zh": {"title": "", "desc": ""}
+  },
+  "founder_edge": {
+    "name": "example-event-2026",
+    "relation": "UnicornsMap.com $UM-Radar founder-indexed event edge (zo-20260912) — radar coverage edge, no attendance asserted",
+    "type": "osint_index"
+  }
+}

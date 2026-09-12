@@ -1,0 +1,36 @@
+{
+  "id": "um.qaa.v20260912",
+  "mode": "fail_closed",
+  "promote_requires": "ALL_PASS",
+  "gates": [
+    {"id": "G00_ADDITIVE", "test": "no existing slug overwritten; no route deleted", "fail": "ABORT_CYCLE"},
+    {"id": "G01_SLUG_UNIQUE", "test": "slug not in /api/x402/catalog.json", "fail": "REKEY_OR_MERGE"},
+    {"id": "G02_SOURCES_GE2", "test": "every numeric or identity claim has >=2 independent sources", "fail": "DEADLETTER"},
+    {"id": "G03_NO_INVENT", "test": "no guessed attendees/titles/NW/deals/handles", "fail": "DEADLETTER"},
+    {"id": "G04_HANDLE", "test": "unverified handle == HANDLE_UNKNOWN", "fail": "REWRITE"},
+    {"id": "G05_DATE", "test": "day precision only if published else YYYY-MM", "fail": "REWRITE"},
+    {"id": "G06_GEO", "test": "real venue coords or city centroid + unpublished flag", "fail": "REWRITE"},
+    {"id": "G07_PHOTO", "test": "events: PHOTO-QAA REAL-2; no AI-generated event imagery", "fail": "publish_x=false"},
+    {"id": "G08_CCY", "test": "currencies[0] is local fiat or local stable", "fail": "REWRITE"},
+    {"id": "G09_I18N", "test": "tr.en+tr.ja+tr.zh titles exist before promote; others queued", "fail": "HOLD_I18N"},
+    {"id": "G10_CONF", "test": "entity confidence >=80", "fail": "HOLD"},
+    {"id": "G11_EDGE", "test": "events: exactly one founder osint_index edge", "fail": "REWRITE"},
+    {"id": "G12_NODE_CHECK", "test": "node --check clean", "fail": "ABORT_DEPLOY"},
+    {"id": "G13_HTTP", "test": "homepage 200 AND new slug 200 AND old sample slugs 200", "fail": "ROLLBACK"},
+    {"id": "G14_FEEDS", "test": "events+geo+geojson+relations+catalog increment consistently", "fail": "ROLLBACK"},
+    {"id": "G15_X402", "test": "price.amount==5 price.currency==USDC network==Base payTo unchanged", "fail": "ABORT"},
+    {"id": "G16_CMC_DECOUPLE", "test": "no CMC auto-post on promote", "fail": "STRIP"}
+  ],
+  "verify_table": [
+    "/api/radar/events.json",
+    "/api/radar/geo.json",
+    "/api/radar/geojson.json",
+    "/api/radar/relations.json",
+    "/api/x402/catalog.json",
+    "/api/radar/{slug}.json?lang=en&ccy=USDC",
+    "/radar/{slug}",
+    "/",
+    "/sitemap.xml"
+  ],
+  "rollback": "revert only the new node + new edge + new feed rows; never revert unrelated catalog"
+}

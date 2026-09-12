@@ -1,0 +1,27 @@
+UM INTAKE PACK v20260912 — ADDITIVE ONLY — DO NOT BREAK PROD
+
+Store these files on Zo under ~/um-radar/zo-pack/ and freeze SYSTEM_PREFIX_V20260912 as the DeepSeek Flash system prompt for ALL classify/i18n/fx calls.
+
+HOT MODEL: deepseek-flash (DeepSeek V4.1 Flash). HIT CACHE: never mutate the system prefix. Variable payload after prefix only.
+
+PROD LAW: additive-only. Draft first. PHOTO-QAA REAL-2. HANDLE_UNKNOWN. >=2 sources. Local ccy first. node --check. wrangler-deploy.toml only. homepage must stay 200.
+
+LIVE EDGE:
+- https://unicornsmap.com
+- CA 0x909851A8598f560F2F3B68Bb949D836E7dbb5e93
+- payTo 0x211D91beD006f7bB3Eaf97496260a8F905298Cea
+- GET /api/x402/status version edge-v2026-07-01-bankr-cmc · 5 USDC Base
+- bankr RN982CZZ-BNKR
+- canon docs/EVENT-INGEST-STANDARD.md + docs/SCHEMA-sample.json
+- catalog ~272 entities, 20 locales
+
+CYCLE 15m: INTAKE→CLASSIFY→FACT+GEO+FX∥→CARD+I18N→QAA→DRAFT→VERIFY→PROMOTE
+Default publish_x=false. Promote only on email UM PROMOTE <slug> after gates G00–G16 pass.
+
+UX: iPhone-dense radar card, personas default/sales/vc/hnwi/bnkrclub, en+ja+zh before promote, other 17 queued.
+
+CMC is a sidecar. Do not auto-post to CoinMarketCap on promote.
+
+SUCCESS: +1 verified node, feeds increment, zero slug collisions, zero homepage break.
+
+Attached contracts: 00 ingest, 01 taxonomy, 02 QAA, 03 cache, 04 UX card, 05 prefix, 06 worker template.

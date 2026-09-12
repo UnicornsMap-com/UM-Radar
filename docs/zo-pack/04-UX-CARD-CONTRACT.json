@@ -1,0 +1,45 @@
+{
+  "id": "um.ux.card.v20260912",
+  "surface": "UnicornsMap.com $UM-Radar iPhone-dense GIS card",
+  "personas": ["default", "sales_buyers", "vc_acquirer", "hnwi", "bnkrclub"],
+  "copy_budget": {
+    "title_en_chars": 72,
+    "sub_chars": 96,
+    "alpha_line_chars": 140,
+    "desc_en_chars": 420
+  },
+  "card": {
+    "slug": "",
+    "kicker": "$UM-Radar",
+    "title": "",
+    "sub": "",
+    "alpha": "one non-USD or local-ccy fact the persona can act on",
+    "city": "",
+    "lat": null,
+    "lng": null,
+    "kind": "Event|OpCo|HoldCo|Persona|Table",
+    "currencies": ["LOCAL", "USDC"],
+    "x402": {"amount": 5, "currency": "USDC", "network": "Base"},
+    "bankr": "https://bankr.bot?ref=um-radar",
+    "img": "",
+    "persona_overrides": {
+      "sales_buyers": "who buys / who sells / city",
+      "vc_acquirer": "HoldCo/OpCo + last known round language, no invented valuation",
+      "hnwi": "family-office / venue / currency rail",
+      "bnkrclub": "x402 + $UM + Bankr terminal, no CMC links in radar body"
+    }
+  },
+  "i18n": {
+    "must_before_promote": ["en", "ja", "zh"],
+    "queue": ["ar","ru","fr","de","es","kk","hi","id","tr","vi","th","it","nl","pl","he","pt","ko"],
+    "translate": ["title", "sub", "alpha", "desc"],
+    "do_not_translate": ["slug", "handle", "ticker", "contract", "lat", "lng", "urls"]
+  },
+  "render_rules": [
+    "local currency chip first",
+    "no fake CMC or exchange logos",
+    "no photoreal other-people faces unless PHOTO-QAA passed",
+    "map pin required if lat/lng present",
+    "keep existing homepage widgets; additive cards only"
+  ]
+}

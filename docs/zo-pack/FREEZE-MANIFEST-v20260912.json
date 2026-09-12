@@ -1,0 +1,40 @@
+{
+  "id": "um.zo.freeze.v20260912",
+  "frozen_at_utc": "2026-09-12T17:12:00Z",
+  "pack_source_zip": "um-radar-zo-pack-v20260912.zip",
+  "stored_under": "~/um-radar/zo-pack/",
+  "model_hot": "deepseek-flash",
+  "system_prefix_id": "SYSTEM_PREFIX_V20260912",
+  "system_prefix_file": "05-FLASH-SYSTEM-PREFIX.txt",
+  "prefix_immutable": true,
+  "scope": ["classify", "i18n", "fx"],
+  "cache_law": "byte-freeze prefix; variable payload after prefix only; never timestamp prefix; never inject operator chat into prefix",
+  "files": {
+    "00-ZO-CONDUCTOR-INGEST-v2026-09-12.md": "1db4af4b2a1e172c32ee6c5c160cbbc22d134648ed5697f1d8b2075610260fb3",
+    "01-CLASSIFIER-TAXONOMY.json": "18ecce832c68933cc023cc98866eb38d7547416aec54e00099bce344c5feab0f",
+    "02-QAA-GATES.json": "df954ba6595d99f51a838ac9a7cee36fea72729d8dc401336e03af8b15df8d3b",
+    "03-CACHE-CONTRACT.json": "24a748f62e940eaee8daa14f39c17a618c6c63987587064f9dcf4cb1a4a96cc7",
+    "04-UX-CARD-CONTRACT.json": "9f638841deea6e7da654410aeaf1c415375765a13cf3da9d9a53de0177c57946",
+    "05-FLASH-SYSTEM-PREFIX.txt": "6099571b26e306219d974b2f6bfcaaf08d33b84ac1baa9357041d3bd90496a89",
+    "06-WORKER-NODE-TEMPLATE.json": "b5965ff1616da67586ec9a81130ec8d680b1979c7f895ece801bcaacc3900044",
+    "07-ZO-EMAIL-BODY.txt": "77a3d0d5df4f92d0ab221e95fdabe93d9acc8ea21aafaae0a925cea5fe866eeb"
+  },
+  "live_edge_verified_20260912": {
+    "homepage": "200",
+    "x402_status_version": "edge-v2026-07-01-bankr-cmc",
+    "price": "5 USDC Base",
+    "token_ca": "0x909851A8598f560F2F3B68Bb949D836E7dbb5e93",
+    "payTo": "0x211D91beD006f7bB3Eaf97496260a8F905298Cea",
+    "catalog_count": 272,
+    "bankr_ref": "RN982CZZ-BNKR",
+    "whois_until": "2036-12-31"
+  },
+  "verify_table_20260912": {
+    "/": 200,
+    "/api/radar/events.json": 200,
+    "/api/radar/geo.json": 200,
+    "/radar/wikiexpo-hk-2026": 200
+  },
+  "prod_law": "additive-only; draft first (publish_x=false); promote only on UM PROMOTE <slug> after G00-G16 all pass; rollback only the failing change",
+  "cmc": "sidecar — never auto-post on promote"
+}

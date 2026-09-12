@@ -1,0 +1,35 @@
+{
+  "id": "um.cache.v20260912",
+  "why": "V4.1 Flash economics: cache-hit input << miss. Prefix stability = gross margin.",
+  "model_id": "deepseek-flash",
+  "context_tokens": 1000000,
+  "kv_bytes_per_tok": 890,
+  "pricing_ref_2026_09": {
+    "cache_hit_in_offpeak_usd_per_mtok": 0.003,
+    "cache_miss_in_usd_per_mtok": 0.15,
+    "out_usd_per_mtok": 0.60
+  },
+  "system_prefix_id": "SYSTEM_PREFIX_V20260912",
+  "rules": [
+    "Byte-freeze system prefix across all Flash calls of the same role",
+    "Put variable document AFTER prefix, never before",
+    "Do not timestamp the system prefix",
+    "Do not inject operator chat into prefix",
+    "Normalize whitespace in prefix",
+    "Batch i18n of many slugs in one conversation with same prefix",
+    "KV key cls:{sha256(nfkc_lower_text)} stores type+sector+lang+ccy hints",
+    "KV key fact:{slug} stores claims pack; i18n reads it, never re-facts",
+    "CF Cache-Control on GET /api/radar/*.json: public, s-maxage=60, stale-while-revalidate=600",
+    "HTML SSR pages: edge cache + HTML rewriter; do not wait on Flash",
+    "Promote does not purge homepage cache until verify_table green",
+    "Off-peak bulk i18n window: 16:00-22:00 Asia/Shanghai when possible"
+  ],
+  "hit_ratio_target": 0.7,
+  "anti_patterns": [
+    "unique system prompt per slug",
+    "putting slug in system prefix",
+    "chain-of-thought in cached prefix",
+    "translating source URLs",
+    "regenerating FACT pack per locale"
+  ]
+}

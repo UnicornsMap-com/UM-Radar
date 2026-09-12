@@ -58,3 +58,16 @@ Verify table (green): `/`, `/api/radar/events.json`, `/api/radar/geo.json`, `/ap
 - Slug collision (`/api/x402/catalog.json`) → rekey or merge, never overwrite.
 - `publish_x=false` until the verify table is green; PHOTO-QAA REAL-2 for event photos; `HANDLE_UNKNOWN` when unverified.
 - CMC Gravity is a **sidecar** — never auto-post to CoinMarketCap on promote.
+
+## Cache economics (measured 2026-09-12 — see `CACHE-PROBE-20260912.json`)
+Route `deepseek/deepseek-v4.1-flash` (1,048,576 ctx) · 3 identical calls · frozen prefix byte-identical.
+
+| run | prompt tok | cached tok | completion | cost |
+|---|---|---|---|---|
+| 1 (miss) | 1736 | 0 | 120 | $0.0006648 |
+| 2 (miss) | 1714 | 0 | 120 | $0.0006582 |
+| 3 (**HIT**) | 1714 | **1536** | 120 | **$0.0002066** |
+
+Hit ratio **0.896** (contract target >=0.70) · 3.19x cheaper for identical work · input cost 36.7x lower on a HIT.
+Same probe sent a placeholder-domain source to the classifier: it returned `HANDLE_UNKNOWN`, `publish_x=false`, empty `claims[]` — canon holds, nothing invented.
+Implication: never mutate the prefix mid-batch; one byte change drops the whole cached segment back to miss price.

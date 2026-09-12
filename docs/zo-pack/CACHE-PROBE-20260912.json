@@ -1,0 +1,34 @@
+{
+  "id": "um.cache.probe.v20260912",
+  "probe_utc": "2026-09-12T17:35:00Z",
+  "model_routed": "deepseek/deepseek-v4.1-flash",
+  "router": "openrouter",
+  "context_length_reported": 1048576,
+  "system_prefix_id": "SYSTEM_PREFIX_V20260912",
+  "system_prefix_sha256": "6099571b26e306219d974b2f6bfcaaf08d33b84ac1baa9357041d3bd90496a89",
+  "method": "3 identical calls, byte-identical frozen prefix, identical payload, temperature 0",
+  "results": [
+    {"run": 1, "prompt_tokens": 1736, "cached_tokens": 0, "cache_write_tokens": 0, "completion_tokens": 120, "cost_usd": 0.0006648},
+    {"run": 2, "prompt_tokens": 1714, "cached_tokens": 0, "cache_write_tokens": 0, "completion_tokens": 120, "cost_usd": 0.0006582},
+    {"run": 3, "prompt_tokens": 1714, "cached_tokens": 1536, "cache_write_tokens": 0, "completion_tokens": 120, "cost_usd": 0.000206616}
+  ],
+  "measured": {
+    "prompt_cache_hit_tokens": 1536,
+    "prompt_cache_hit_ratio_run3": 0.896,
+    "cost_drop_hit_vs_miss": "0.0006582 -> 0.000206616 (3.19x cheaper for identical work)",
+    "prompt_cost_run2_usd": 0.0000918,
+    "prompt_cost_run3_usd": 0.0000025,
+    "prompt_cost_reduction": "36.7x on input once the prefix is a HIT"
+  },
+  "no_invent_check": {
+    "probe": "placeholder-domain source (example.org) sent to the classifier",
+    "observed": "HANDLE_UNKNOWN + publish_x=false + claims[] empty + source marked unverified",
+    "verdict": "PASS - canon honored, nothing invented"
+  },
+  "conclusions": [
+    "Frozen prefix is routable and cache-effective on deepseek-v4.1-flash at 1M ctx.",
+    "Cache hits are not guaranteed on the first call of a session; identical repeat calls are the HIT path.",
+    "Never mutate the prefix: any byte change drops the whole cached segment back to miss price.",
+    "Measured hit ratio 0.896 on the repeat call exceeds the >=0.70 contract target."
+  ]
+}
